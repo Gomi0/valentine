@@ -1,0 +1,289 @@
+.page {
+  height: 100vh;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(circle at top,
+    #ffd6e3 0%,
+    #ffb6cc 40%,
+    #f48fb1 100%
+  );
+}
+
+.envelope {
+  position: relative;
+  width:520px;
+  height: 340px;
+  cursor: pointer;
+}
+
+.back {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(160deg,#ff8fb3,#ff5a8b);
+  border-radius: 10px;
+}
+
+.front {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(#ff9fc0,#ff6f9c);
+  clip-path: polygon(2% 100%,50% 45%,98% 100%);
+}
+
+.flap {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(#ff7fab,#ff4f86);
+  clip-path: polygon(2% 0, 50% 45%, 98% 0);
+  transform-origin: top;
+  transition: transform .6s ease;
+  z-index: 5;
+  box-shadow: 0 4px 8px rgba(0,0,0,.08);
+}
+
+.page.open .flap {
+  transform: rotateX(180deg);
+  z-index: 0;
+}
+
+.hearts {
+  position: absolute;
+  bottom: 40px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  z-index: 2;
+}
+
+.heart {
+  width: 34px;
+  height: 34px;
+  background: #ff7aa2;
+  transform: rotate(-45deg) translateY(40px);
+  opacity: 0;
+  transition: all .5s cubic-bezier(.2,1.6,.3,1);
+}
+
+.page.open .heart {
+  transform: rotate(-45deg) translateY(-20px);
+  opacity: 1;
+}
+
+
+.message-card {
+  position: relative;
+  width: 380px;
+  height: 520px;        /* กำหนดความสูงคงที่ */
+  padding: 40px;
+  background: white;
+  border-radius: 18px;
+  text-align: center;
+
+  overflow: hidden; 
+
+  box-shadow: 0 30px 60px rgba(0,0,0,.25);
+
+  opacity: 0;
+   transform: translateY(60px) scale(.85);
+
+  transition:
+    transform .5s cubic-bezier(.2,1.2,.3,1),
+    opacity .4s ease;
+
+  transition-delay: 0s; /* ตอนปิด */
+  box-shadow:
+  0 20px 40px rgba(0,0,0,.12),
+  0 0 40px rgba(255,120,170,.25); 
+}
+
+.page.open .message-card {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  transition-delay: .5s; /* รอ flap เปิด */
+}
+
+.card-image {
+  width: 100%;
+  max-width: 260px;
+  border-radius: 12px;
+  margin: 16px 0;
+  object-fit: cover;
+}
+
+.message-float {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+
+  animation: floatCard 5s ease-in-out infinite;
+}
+.message-text {
+  margin-top: 10px;
+  height: 120px;     /* พื้นที่ข้อความ */
+  overflow-y: auto;  /* เลื่อนเมื่อข้อความยาว */
+  word-break: break-word;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+.message-float {
+  animation: floatCard 5s ease-in-out infinite;
+
+}.page.open .message-float {
+  animation: none;
+}
+
+.message-position {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.floating-hearts {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.floating-hearts span {
+  position: absolute;
+  color: rgba(255,255,255,0.6);
+  font-size: 20px;
+  animation: heartFloat 8s linear infinite;
+}
+
+.floating-hearts span:nth-child(1) {
+  left: 20%;
+  animation-delay: 0s;
+}
+.floating-hearts span:nth-child(2) {
+  left: 40%;
+  animation-delay: 2s;
+}
+.floating-hearts span:nth-child(3) {
+  left: 60%;
+  animation-delay: 4s;
+}
+.floating-hearts span:nth-child(4) {
+  left: 80%;
+  animation-delay: 6s;
+}
+
+@keyframes heartFloat {
+  0% {
+    transform: translateY(100vh) scale(.8);
+    opacity: 0;
+  }
+  20% { opacity: .6; }
+  100% {
+    transform: translateY(-20vh) scale(1.2);
+    opacity: 0;
+  }
+}
+.card-footer {
+  margin-top: 10px;
+  color: #ff6fa0;
+  letter-spacing: 6px;
+  opacity: .7;
+}
+
+.footer-hearts {
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+
+  pointer-events: none;
+  z-index: 1;
+}
+
+.footer-hearts span {
+  font-size: 28px;
+  color: rgba(255, 110, 160, 0.8);
+  opacity: .4;
+  transform: scale(.8);
+
+  animation: footerFloat 3.5s ease-in-out infinite;
+}
+
+.footer-hearts span:nth-child(2) { animation-delay: .3s; }
+.footer-hearts span:nth-child(3) { animation-delay: .6s; }
+.footer-hearts span:nth-child(4) { animation-delay: .9s; }
+.footer-hearts span:nth-child(5) { animation-delay: 1.2s; }
+.footer-hearts span:nth-child(6) { animation-delay: 1.5s; }   
+@keyframes footerFloat {
+  0%,100% {
+    transform: translateY(0);
+    opacity: .7;
+  }
+  50% {
+    transform: translateY(-12px);
+    opacity: 1;
+  }
+}
+
+.heart-burst {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 3;
+}
+
+.heart-burst span {
+  position: absolute;
+  bottom: -80px;
+  opacity: 0;
+  color: rgba(255,110,160,.9);
+}
+.heart-burst span:nth-child(1) { left: 10%; }
+.heart-burst span:nth-child(2) { left: 25%; }
+.heart-burst span:nth-child(3) { left: 40%; }
+.heart-burst span:nth-child(4) { left: 55%; }
+.heart-burst span:nth-child(5) { left: 70%; }
+.heart-burst span:nth-child(6) { left: 85%; }
+.heart-burst span:nth-child(7) { left: 50%; }
+
+.page.open .heart-burst span {
+  animation: heartRise 2.5s ease-out forwards;
+}
+
+.page.open .heart-burst span:nth-child(2) { animation-delay: .1s; }
+.page.open .heart-burst span:nth-child(3) { animation-delay: .2s; }
+.page.open .heart-burst span:nth-child(4) { animation-delay: .3s; }
+.page.open .heart-burst span:nth-child(5) { animation-delay: .4s; }
+.page.open .heart-burst span:nth-child(6) { animation-delay: .5s; }
+.page.open .heart-burst span:nth-child(7) { animation-delay: .6s; }
+
+@keyframes heartRise {
+  0% {
+    transform: translateY(0) translateX(0) scale(.8);
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+  100% {
+    transform:
+      translateY(-120vh)
+      translateX(calc((var(--randomX, 0) - 0.5) * 200px))
+      rotate(30deg)
+      scale(1.4);
+    opacity: 0;
+  }
+}
